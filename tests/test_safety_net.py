@@ -51,7 +51,7 @@ class OrderSafetyNetTests(unittest.TestCase):
             )
 
     def test_invalid_fulfillment_is_rejected_without_saving_state(self):
-        with self.assertRaisesRegex(ValueError, "Fulfillment must be pickup or delivery"):
+        with self.assertRaisesRegex(ValueError, "Fulfillment must be pickup, delivery, or express"):
             self.service.place_order(
                 "regular", [{"product_id": "notebook", "quantity": 1}], "drone"
             )

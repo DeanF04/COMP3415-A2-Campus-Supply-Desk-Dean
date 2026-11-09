@@ -107,6 +107,21 @@ These four tests are a starting point. **Passing them does not mean every requir
 
 The supplied tests use temporary files and do not change your saved orders or stock.
 
+
+## Express delivery (CR-01)
+
+Quotes and orders now support a third fulfillment option: `express`. Express delivery always adds **1,200 cents ($12.00 CAD)** and is never waived by the standard free-delivery threshold. Pickup remains the default.
+
+Examples:
+
+```sh
+python -m supplydesk quote --customer regular --fulfillment express --item notebook:2
+python -m supplydesk quote --customer student --fulfillment express --item hoodie:2
+python -m supplydesk place --customer regular --fulfillment express --item hoodie:3
+```
+
+The interactive menu also accepts `express` at the fulfillment prompt.
+
 ## 4. Saved data and practice sessions
 
 The program automatically saves orders and stock levels in `.supplydesk/state.json`. When you close and reopen it, you continue where you left off.
