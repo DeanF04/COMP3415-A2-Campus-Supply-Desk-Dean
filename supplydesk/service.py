@@ -4,14 +4,13 @@ from supplydesk.storage import JsonStore
 
 
 VALID_CUSTOMER_TYPES = ("regular", "student")
-VALID_FULFILLMENTS = ("pickup", "delivery", "express")
+VALID_FULFILLMENTS = ("pickup", "delivery")
 MIN_QUANTITY = 1
 MAX_QUANTITY = 99
 STUDENT_DISCOUNT_THRESHOLD_CENTS = 5000
 STUDENT_DISCOUNT_PERCENT = 10
 DISCOUNT_ROUNDING_BIAS = 50
 STANDARD_DELIVERY_FEE_CENTS = 600
-EXPRESS_DELIVERY_FEE_CENTS = 1200
 FREE_DELIVERY_THRESHOLD_CENTS = 10000
 
 
@@ -83,7 +82,7 @@ class OrderService:
         if customer_type not in VALID_CUSTOMER_TYPES:
             raise ValueError("Customer type must be regular or student.")
         if fulfillment not in VALID_FULFILLMENTS:
-            raise ValueError("Fulfillment must be pickup, delivery, or express.")
+            raise ValueError("Fulfillment must be pickup or delivery.")
         if not isinstance(items, list) or not items:
             raise ValueError("An order must contain at least one item.")
 
@@ -118,8 +117,6 @@ class OrderService:
         return 0
 
     def _calculate_delivery(self, fulfillment, subtotal_cents, discount_cents):
-        if fulfillment == "express":
-            return EXPRESS_DELIVERY_FEE_CENTS
         if (
             fulfillment == "delivery"
             and subtotal_cents - discount_cents < FREE_DELIVERY_THRESHOLD_CENTS
